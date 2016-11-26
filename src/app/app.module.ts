@@ -6,6 +6,7 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ListRodPage } from '../pages/listRod/listRod';
 import { EditRodPage } from '../pages/editRod/editRod';
+import { Storage } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,6 @@ import { EditRodPage } from '../pages/editRod/editRod';
     EditRodPage,
     TabsPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage]
 })
 export class AppModule {}

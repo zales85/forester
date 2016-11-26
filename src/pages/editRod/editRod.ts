@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
+import { Storage } from '@ionic/storage';
+
 
 @Component({
   selector: 'page-editRod',
@@ -11,20 +13,31 @@ import { NavController } from 'ionic-angular';
 export class EditRodPage {
 
   rod = {
+        id: -1,
         documentNumber: '',
         creationDate: '2015-05-05',
         planPosition: '',
         direction: '',
-        executor: ''
+        executor: '',
+        synchronized: 'false'
   };
+
+  allRods = [];
 
   submitted = false;
 
-  constructor(public navCtrl: NavController) {
-
+  constructor(public navCtrl: NavController, private storage: Storage) {
   }
 
-  ionViewLoaded() {
+  ngOnInit() {
+    console.log('init ');
+     this.storage.get('rodsStore').then((val) => {
+       console.log('Your rodsStore are', val);
+       if(val) {
+        console.log('Your rodsStore length is', val.length);
+          this.allRods = val;
+       }
+     })
   }
 
   cancel() {
@@ -35,7 +48,10 @@ export class EditRodPage {
   save(form) {
     this.submitted = true;
     if(form.form.valid) {
-      console.log(form.value);
+      console.log('new value',form.value);
+      this.rod.id = this.allRods.length + 1
+      this.allRods.push(this.rod);
+      this.storage.set('rodsStore', this.allRods);
       this.navCtrl.pop();
     }
   }

@@ -15,37 +15,9 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item>
-      <h2>My Neighbor Totoro</h2>
-      <p>Hayao Miyazaki • 1988</p>
-      <button ion-button icon-only clear item-right  color="dark" (click)="editRod()">
-        <ion-icon name="settings"></ion-icon>
-      </button>
-    </ion-item>
-    <ion-item>
-      <h2>My Neighbor Totoro</h2>
-      <p>Hayao Miyazaki • 1988</p>
-      <button ion-button icon-only clear item-right  color="dark" (click)="editRod()">
-        <ion-icon name="settings"></ion-icon>
-      </button>
-    </ion-item>
-    <ion-item>
-      <h2>My Neighbor Totoro</h2>
-      <p>Hayao Miyazaki • 1988</p>
-      <button ion-button icon-only clear item-right  color="dark" (click)="editRod()">
-        <ion-icon name="settings"></ion-icon>
-      </button>
-    </ion-item>
-    <ion-item>
-      <h2>My Neighbor Totoro</h2>
-      <p>Hayao Miyazaki • 1988</p>
-      <button ion-button icon-only clear item-right  color="dark" (click)="editRod()">
-        <ion-icon name="settings"></ion-icon>
-      </button>
-    </ion-item>
-    <ion-item>
-      <h2>My Neighbor Totoro</h2>
-      <p>Hayao Miyazaki • 1988</p>
+    <ion-item *ngFor="let item of allRods">
+      <h2>{{item.documentNumber}}</h2>
+      <p>{{item.executor}} - {{item.creationDate}}</p>
       <button ion-button icon-only clear item-right  color="dark" (click)="editRod()">
         <ion-icon name="settings"></ion-icon>
       </button>
