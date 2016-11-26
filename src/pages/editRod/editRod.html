@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+
+    <ion-title>
+      Edycja ROD
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="cancel()">
+        <ion-icon name="backspace"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form #form="ngForm" (ngSubmit)="save(form)">
+    <ion-item>
+      <ion-label>Numer dokumentu :</ion-label>
+      <ion-input type="text" required [(ngModel)]="rod.documentNumber" name="documentNumber" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Data przychodu :</ion-label>
+      <ion-input type="date" required [(ngModel)]="rod.creationDate" name="creationDate"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Pozycja planu</ion-label>
+      <ion-input  type="text" required [(ngModel)]="rod.planPosition" name="planPosition"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Kierunek przychodu</ion-label>
+      <ion-input  type="text" required [(ngModel)]="rod.direction" name="direction"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Wykonawca</ion-label>
+      <ion-input  type="text" required [(ngModel)]="rod.executor" name="executor"></ion-input>
+    </ion-item>
+    <button ion-button type="submit" block color="danger">Zapisz</button>
+  </form>
+</ion-content>

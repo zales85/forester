@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
+import { EditRodPage } from '../editRod/editRod';
+
 @Component({
   selector: 'page-listRod',
   templateUrl: 'listRod.html'
@@ -14,11 +16,11 @@ export class ListRodPage {
 
   addNewRod() {
     console.log("addNewRod");
-    //this.navCtrl.push(EditRodPage);
+    this.navCtrl.push(EditRodPage);
   }
 
   editRod() {
     console.log("editRod");
-    //this.navCtrl.push(EditRodPage);
+    this.navCtrl.push(EditRodPage);
   }
 }

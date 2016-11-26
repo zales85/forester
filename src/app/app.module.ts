@@ -5,6 +5,7 @@ import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ListRodPage } from '../pages/listRod/listRod';
+import { EditRodPage } from '../pages/editRod/editRod';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { ListRodPage } from '../pages/listRod/listRod';
     AboutPage,
     HomePage,
     ListRodPage,
+    EditRodPage,
     TabsPage
   ],
   imports: [
@@ -23,6 +25,7 @@ import { ListRodPage } from '../pages/listRod/listRod';
     AboutPage,
     HomePage,
     ListRodPage,
+    EditRodPage,
     TabsPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
