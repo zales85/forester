@@ -12,11 +12,13 @@ export class EditRodPage {
 
   rod = {
         documentNumber: '',
-        creationDate: '',
+        creationDate: '2015-05-05',
         planPosition: '',
         direction: '',
         executor: ''
   };
+
+  submitted = false;
 
   constructor(public navCtrl: NavController) {
 
@@ -31,8 +33,11 @@ export class EditRodPage {
   }
 
   save(form) {
-    console.log(form.value);
-    this.navCtrl.pop();
+    this.submitted = true;
+    if(form.form.valid) {
+      console.log(form.value);
+      this.navCtrl.pop();
+    }
   }
 
 }

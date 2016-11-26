@@ -14,14 +14,15 @@
 </ion-header>
 
 <ion-content padding>
-  <form #form="ngForm" (ngSubmit)="save(form)">
+  <form #form="ngForm" (ngSubmit)="save(form)" novalidate>
     <ion-item>
       <ion-label>Numer dokumentu :</ion-label>
-      <ion-input type="text" required [(ngModel)]="rod.documentNumber" name="documentNumber" ></ion-input>
+      <ion-input type="text" required [(ngModel)]="rod.documentNumber" name="documentNumber" [class.invalid]="submitted"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Data przychodu :</ion-label>
-      <ion-input type="date" required [(ngModel)]="rod.creationDate" name="creationDate"></ion-input>
+      <ion-datetime displayFormat="YYYY-MM-DD" required [(ngModel)]="rod.creationDate" name="creationDate">
+      </ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>Pozycja planu</ion-label>
@@ -35,6 +36,6 @@
       <ion-label>Wykonawca</ion-label>
       <ion-input  type="text" required [(ngModel)]="rod.executor" name="executor"></ion-input>
     </ion-item>
-    <button ion-button type="submit" block color="danger">Zapisz</button>
+    <button  ion-button round block type="submit" color="danger" [disabled]="!form.valid">Zapisz</button>
   </form>
 </ion-content>
