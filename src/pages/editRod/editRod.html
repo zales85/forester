@@ -26,15 +26,21 @@
     </ion-item>
     <ion-item>
       <ion-label>Pozycja planu</ion-label>
-      <ion-input  type="text" required [(ngModel)]="rod.planPosition" name="planPosition"></ion-input>
+      <ion-select [(ngModel)]="rod.planPosition" name="planPosition" required placeholder="wybierz" multiple="false">
+        <ion-option *ngFor="let item of dictionaryService.getPlans()"  value="{{item.name}}">{{item.name}}</ion-option>
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Kierunek przychodu</ion-label>
-      <ion-input  type="text" required [(ngModel)]="rod.direction" name="direction"></ion-input>
+      <ion-select [(ngModel)]="rod.direction" name="direction" required placeholder="wybierz" multiple="false">
+        <ion-option *ngFor="let item of dictionaryService.getIncomeTypes()"  value="{{item.name}}">{{item.name}}</ion-option>
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Wykonawca</ion-label>
-      <ion-input  type="text" required [(ngModel)]="rod.executor" name="executor"></ion-input>
+      <ion-select [(ngModel)]="rod.executor" name="executor" required placeholder="wybierz" multiple="false">
+        <ion-option *ngFor="let item of dictionaryService.getExecutors()"  value="{{item.name}}">{{item.name}}</ion-option>
+      </ion-select>
     </ion-item>
     <button  ion-button round block type="submit" color="danger" [disabled]="!form.valid">Zapisz</button>
   </form>

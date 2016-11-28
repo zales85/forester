@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
+import {DictionaryService} from "../../services/DictionaryService";
 
 
 @Component({
@@ -26,7 +27,7 @@ export class EditRodPage {
 
   submitted = false;
 
-  constructor(public navCtrl: NavController, private storage: Storage) {
+  constructor(public navCtrl: NavController, public storage: Storage, public dictionaryService: DictionaryService) {
   }
 
   ngOnInit() {
