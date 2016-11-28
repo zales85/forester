@@ -9,6 +9,7 @@ import { EditRodPage } from '../pages/editRod/editRod';
 import { Storage } from '@ionic/storage';
 import { DictionariesPage } from '../pages/dictionaries/dictionaries';
 import { DictionaryService } from '../services/DictionaryService';
+import { ListDictionaryPage } from '../pages/listDictionary/listDictionary';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { DictionaryService } from '../services/DictionaryService';
     ListRodPage,
     EditRodPage,
     TabsPage,
-    DictionariesPage
+    DictionariesPage,
+    ListDictionaryPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -31,7 +33,8 @@ import { DictionaryService } from '../services/DictionaryService';
     ListRodPage,
     EditRodPage,
     TabsPage,
-    DictionariesPage
+    DictionariesPage,
+    ListDictionaryPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage, DictionaryService]
 })
