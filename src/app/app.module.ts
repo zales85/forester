@@ -10,6 +10,7 @@ import { Storage } from '@ionic/storage';
 import { DictionariesPage } from '../pages/dictionaries/dictionaries';
 import { DictionaryService } from '../services/DictionaryService';
 import { ListDictionaryPage } from '../pages/listDictionary/listDictionary';
+import { StorageService } from '../services/StorageService';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,6 @@ import { ListDictionaryPage } from '../pages/listDictionary/listDictionary';
     DictionariesPage,
     ListDictionaryPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage, DictionaryService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage, DictionaryService, StorageService]
 })
 export class AppModule {}

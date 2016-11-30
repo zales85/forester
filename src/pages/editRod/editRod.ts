@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
-import { Storage } from '@ionic/storage';
 import {DictionaryService} from "../../services/DictionaryService";
+import { StorageService } from '../../services/StorageService';
 
 
 @Component({
@@ -13,32 +13,12 @@ import {DictionaryService} from "../../services/DictionaryService";
 
 export class EditRodPage {
 
-  rod = {
-        id: -1,
-        documentNumber: '',
-        creationDate: '2015-05-05',
-        planPosition: '',
-        direction: '',
-        executor: '',
-        synchronized: 'false'
-  };
-
-  allRods = [];
+  rod = {};
 
   submitted = false;
 
-  constructor(public navCtrl: NavController, public storage: Storage, public dictionaryService: DictionaryService) {
-  }
-
-  ngOnInit() {
-    console.log('init ');
-     this.storage.get('rodsStore').then((val) => {
-       console.log('Your rodsStore are', val);
-       if(val) {
-        console.log('Your rodsStore length is', val.length);
-          this.allRods = val;
-       }
-     })
+  constructor(public navCtrl: NavController, public storageService: StorageService, public dictionaryService: DictionaryService) {
+    this.rod = storageService.createNewRod();
   }
 
   cancel() {
@@ -50,9 +30,22 @@ export class EditRodPage {
     this.submitted = true;
     if(form.form.valid) {
       console.log('new value',form.value);
-      this.rod.id = this.allRods.length + 1
-      this.allRods.push(this.rod);
-      this.storage.set('rodsStore', this.allRods);
+      this.storageService.saveRod(form.value);
+      // this.storage.get('rodsStore').then((val) => {
+      //   if(val) {
+      //     console.log('Your rodsStore length is', val.length);
+      //     console.log('Your rodsStore are', val);
+      //   } else {
+      //     console.log('Your rodsStore empty ');
+      //     val = [];
+      //   }
+      //   val.push(this.rod);
+      //   this.storage.set('rodsStore', val);
+      // })
+
+
+      //this.allRods.push(this.rod);
+      //this.storage.set('rodsStore', this.allRods);
       this.navCtrl.pop();
     }
   }

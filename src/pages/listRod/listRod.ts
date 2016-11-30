@@ -4,7 +4,7 @@ import { NavController } from 'ionic-angular';
 
 import { EditRodPage } from '../editRod/editRod';
 
-import { Storage } from '@ionic/storage';
+import { StorageService } from '../../services/StorageService';
 
 @Component({
   selector: 'page-listRod',
@@ -14,7 +14,7 @@ export class ListRodPage {
 
   allRods = [];
 
-  constructor(public navCtrl: NavController, private storage: Storage) {
+  constructor(public navCtrl: NavController, private storageService: StorageService) {
 
   }
 
@@ -30,17 +30,16 @@ export class ListRodPage {
 
   ngOnInit() {
     console.log('empty init ListRodPage');
+    this.reloadRods();
   }
 
   reloadRods() {
-     this.storage.get('rodsStore').then((val) => {
-       console.log('Your rodsStore are', val);
-       if(val) {
-        console.log('Your rodsStore length is', val.length);
-          this.allRods = val;
-       }
+     this.storageService.getAllRodsPromise().then((val) => {
+       this.allRods = val;
      })
   }
+
+
 
   ionViewDidEnter() {
      console.log('ionViewDidEnter');
