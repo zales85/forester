@@ -11,18 +11,19 @@ export class StorageService {
     return this.storage.get('rodsStore');
   }
 
-  createNewRod() {
+  createNewRod(rodNumber) {
     let currentDate = new Date();
-    var dateValue =  currentDate.getFullYear()+ "-" + (currentDate.getMonth() + 1) + "-" +currentDate.getDate();
+    var dateValue =  currentDate.getFullYear()+ "-" + ("0" +(currentDate.getMonth() + 1)).slice(-2) + "-" +("0" + currentDate.getDate()).slice(-2);
     console.log('dateValue:', dateValue);
     return {
       id: currentDate.getTime(),
-      documentNumber: 'Fake number',
+      documentNumber: 'ROD-' + rodNumber + "-" + dateValue,
       creationDate: dateValue,
       planPosition: '',
       direction: '',
       executor: '',
-      synchronized: 'false'
+      synchronized: 'false',
+      finished: 'false'
     };
   }
 
@@ -32,9 +33,10 @@ export class StorageService {
         console.log('Retrieved rods', val);
       } else {
         console.log('Your rodsStore empty ');
-        val = [];
+        val = {counter:0, rods:[]};
       }
-      val.push(rod);
+      val.counter ++;
+      val.rods.push(rod);
       console.log('Saving rods', val);
       this.storage.set('rodsStore', val);
     })

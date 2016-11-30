@@ -13,6 +13,7 @@ import { StorageService } from '../../services/StorageService';
 export class ListRodPage {
 
   allRods = [];
+  counter = 0;
 
   constructor(public navCtrl: NavController, private storageService: StorageService) {
 
@@ -20,7 +21,7 @@ export class ListRodPage {
 
   addNewRod() {
     console.log("addNewRod");
-    this.navCtrl.push(EditRodPage);
+    this.navCtrl.push(EditRodPage,{"rodNumber": this.counter+1});
   }
 
   editRod() {
@@ -35,7 +36,10 @@ export class ListRodPage {
 
   reloadRods() {
      this.storageService.getAllRodsPromise().then((val) => {
-       this.allRods = val;
+       if(val) {
+         this.allRods = val.rods;
+         this.counter = val.counter;
+       }
      })
   }
 
