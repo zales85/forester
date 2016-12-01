@@ -42,6 +42,21 @@
         <ion-option *ngFor="let item of dictionaryService.getExecutors()"  value="{{item.name}}">{{item.name}}</ion-option>
       </ion-select>
     </ion-item>
+    <ion-item>
+      <ion-label stacked>Szerokość stosu : {{rod.width}}</ion-label>
+      <ion-range min="0" max="20" step="1" snaps="true" [(ngModel)]="rod.width" required color="dark" name="width">
+        <ion-icon range-left small color="dark" name="resize"></ion-icon>
+        <ion-icon range-right color="dark" name="resize"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Wysokość stosu : {{rod.height}}</ion-label>
+      <ion-range min="0" max="20" step="1" snaps="true" [(ngModel)]="rod.height" required color="dark" name="height">
+        <ion-icon range-left small color="dark" name="resize"></ion-icon>
+        <ion-icon range-right color="dark" name="resize"></ion-icon>
+      </ion-range>
+    </ion-item>
+
     <button  ion-button round block type="submit" color="danger" [disabled]="!form.valid">Zapisz</button>
   </form>
 </ion-content>
