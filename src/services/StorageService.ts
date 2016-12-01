@@ -51,4 +51,21 @@ export class StorageService {
     })
   }
 
+  synchronizeAllRods() {
+    this.storage.get('rodsStore').then((val) => {
+      if(val) {
+        console.log('Sync retrieved rods', val);
+        val.rods.forEach((value, key, map) =>{
+          if(value['estimated'] && !value['synchronized']) {
+            value['synchronized'] = true;
+          }
+        })
+        this.storage.set('rodsStore', val);
+        console.log('Sync saved rods', val);
+      } else {
+        console.log('Sync your rodsStore empty ');
+      }
+    })
+  }
+
 }

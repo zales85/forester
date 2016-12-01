@@ -21,7 +21,7 @@
       <button [hidden]="item.estimated || item.synchronized" ion-button icon-only clear item-right  color="dark" (click)="editRod(item)">
         <ion-icon name="build"></ion-icon>
       </button>
-      <button [hidden]="!item.estimated" ion-button icon-only clear item-right  color="danger" (click)="showAlertBeforeSync()">
+      <button [hidden]="!item.estimated || item.synchronized" ion-button icon-only clear item-right  color="danger" (click)="showAlertBeforeSync()">
         <ion-icon name="cloud-upload"></ion-icon>
       </button>
       <button [hidden]="!item.synchronized" ion-button icon-only clear item-right  color="primary" (click)="showAlertAfterSync()">

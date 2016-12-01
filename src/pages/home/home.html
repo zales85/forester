@@ -10,7 +10,7 @@
       <ion-col><button (click)="goToListRod()"  color="dark" ion-button round block>Zarządzaj ROD</button></ion-col>
     </ion-row>
     <ion-row center>
-      <ion-col><button color="dark" ion-button round block>Magazyn</button></ion-col>
+      <ion-col><button (click)="goToWarehouse()" color="dark" ion-button round block>Magazyn</button></ion-col>
     </ion-row>
     <ion-row center>
       <ion-col><button (click)="goToDictionaries()" color="dark" ion-button round block>Słowniki</button></ion-col>
@@ -19,7 +19,7 @@
       <ion-col><br/></ion-col>
     </ion-row>
     <ion-row center>
-      <ion-col><button ion-button round block color="secondary">Synchronizuj</button></ion-col>
+      <ion-col><button (click)="synchronizeWithWarehouse()" ion-button round block color="secondary">Synchronizuj</button></ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
