@@ -18,7 +18,7 @@
     <ion-item *ngFor="let item of allRods">
       <h2>{{item.documentNumber}}</h2>
       <p>{{item.executor}} - {{item.creationDate}}</p>
-      <button ion-button icon-only clear item-right  color="dark" (click)="editRod()">
+      <button ion-button icon-only clear item-right  color="dark" (click)="editRod(item)">
         <ion-icon name="settings"></ion-icon>
       </button>
     </ion-item>

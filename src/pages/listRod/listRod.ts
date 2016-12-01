@@ -4,6 +4,8 @@ import { NavController } from 'ionic-angular';
 
 import { EditRodPage } from '../editRod/editRod';
 
+import { AddRodPage } from '../addRod/addRod';
+
 import { StorageService } from '../../services/StorageService';
 
 @Component({
@@ -21,12 +23,12 @@ export class ListRodPage {
 
   addNewRod() {
     console.log("addNewRod");
-    this.navCtrl.push(EditRodPage,{"rodNumber": this.counter+1});
+    this.navCtrl.push(AddRodPage, {"rodNumber": this.counter+1});
   }
 
-  editRod() {
+  editRod(rod) {
     console.log("editRod");
-    this.navCtrl.push(EditRodPage);
+    this.navCtrl.push(EditRodPage, {"rod": rod});
   }
 
   ngOnInit() {

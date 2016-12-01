@@ -6,6 +6,7 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ListRodPage } from '../pages/listRod/listRod';
 import { EditRodPage } from '../pages/editRod/editRod';
+import { AddRodPage } from '../pages/addRod/addRod';
 import { Storage } from '@ionic/storage';
 import { DictionariesPage } from '../pages/dictionaries/dictionaries';
 import { DictionaryService } from '../services/DictionaryService';
@@ -21,7 +22,8 @@ import { StorageService } from '../services/StorageService';
     EditRodPage,
     TabsPage,
     DictionariesPage,
-    ListDictionaryPage
+    ListDictionaryPage,
+    AddRodPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -35,7 +37,8 @@ import { StorageService } from '../services/StorageService';
     EditRodPage,
     TabsPage,
     DictionariesPage,
-    ListDictionaryPage
+    ListDictionaryPage,
+    AddRodPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage, DictionaryService, StorageService]
 })

@@ -7,11 +7,11 @@ import { StorageService } from '../../services/StorageService';
 
 
 @Component({
-  selector: 'page-editRod',
-  templateUrl: 'editRod.html'
+  selector: 'page-addRod',
+  templateUrl: 'addRod.html'
 })
 
-export class EditRodPage {
+export class AddRodPage {
 
   rod = {};
 
@@ -19,7 +19,8 @@ export class EditRodPage {
 
   constructor(public navCtrl: NavController, public params:NavParams,
               public storageService: StorageService, public dictionaryService: DictionaryService) {
-    this.rod = params.get("rod");
+    var rodNumber = params.get("rodNumber");
+    this.rod = storageService.createNewRod(rodNumber);
   }
 
   cancel() {
@@ -30,7 +31,7 @@ export class EditRodPage {
   save(form) {
     this.submitted = true;
     if(form.form.valid) {
-      console.log('update value', this.rod);
+      console.log('new value', this.rod);
       this.storageService.saveRod(this.rod);
       this.navCtrl.pop();
     }
