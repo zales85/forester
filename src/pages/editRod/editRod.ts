@@ -17,7 +17,8 @@ export class EditRodPage {
 
   submitted = false;
 
-  constructor(public navCtrl: NavController, public params:NavParams, public storageService: StorageService, public dictionaryService: DictionaryService) {
+  constructor(public navCtrl: NavController, public params:NavParams,
+              public storageService: StorageService, public dictionaryService: DictionaryService) {
     var rodNumber = params.get("rodNumber");
     this.rod = storageService.createNewRod(rodNumber);
   }
@@ -30,8 +31,8 @@ export class EditRodPage {
   save(form) {
     this.submitted = true;
     if(form.form.valid) {
-      console.log('new value',form.value);
-      this.storageService.saveRod(form.value);
+      console.log('new value', this.rod);
+      this.storageService.saveRod(this.rod);
       this.navCtrl.pop();
     }
   }

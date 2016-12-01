@@ -37,13 +37,11 @@ export class ListRodPage {
   reloadRods() {
      this.storageService.getAllRodsPromise().then((val) => {
        if(val) {
-         this.allRods = val.rods;
+         this.allRods =  Array.from(val.rods.values());
          this.counter = val.counter;
        }
      })
   }
-
-
 
   ionViewDidEnter() {
      console.log('ionViewDidEnter');
