@@ -16,29 +16,29 @@
 <ion-content padding>
   <form #form="ngForm" (ngSubmit)="save(form)" novalidate>
     <ion-item>
-      <ion-label>Numer dokumentu :</ion-label>
-      <ion-input type="text" required [(ngModel)]="rod.documentNumber" name="documentNumber" [class.invalid]="submitted"></ion-input>
+      <ion-label stacked>Numer dokumentu</ion-label>
+      <ion-input type="text" disabled="true" [(ngModel)]="rod.documentNumber" name="documentNumber" [class.invalid]="submitted"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Data przychodu :</ion-label>
-      <ion-datetime displayFormat="YYYY-MM-DD" required [(ngModel)]="rod.creationDate" name="creationDate">
+      <ion-label stacked>Data przychodu drewna</ion-label>
+      <ion-datetime displayFormat="YYYY-MM-DD" disabled="true" [(ngModel)]="rod.creationDate" name="creationDate">
       </ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label>Pozycja planu</ion-label>
-      <ion-select [(ngModel)]="rod.planPosition" name="planPosition" required placeholder="wybierz" multiple="false">
+      <ion-label stacked>Pozycja planu</ion-label>
+      <ion-select [(ngModel)]="rod.planPosition" name="planPosition" disabled="true" placeholder="wybierz" multiple="false">
         <ion-option *ngFor="let item of dictionaryService.getPlans()"  value="{{item.name}}">{{item.name}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Kierunek przychodu</ion-label>
-      <ion-select [(ngModel)]="rod.direction" name="direction" required placeholder="wybierz" multiple="false">
+      <ion-label stacked>Kierunek przychodu</ion-label>
+      <ion-select [(ngModel)]="rod.direction" name="direction" disabled="true" multiple="false">
         <ion-option *ngFor="let item of dictionaryService.getIncomeTypes()"  value="{{item.name}}">{{item.name}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Wykonawca</ion-label>
-      <ion-select [(ngModel)]="rod.executor" name="executor" required placeholder="wybierz" multiple="false">
+      <ion-label stacked>Wykonawca</ion-label>
+      <ion-select [(ngModel)]="rod.executor" name="executor" disabled="true" disabled="true" multiple="false">
         <ion-option *ngFor="let item of dictionaryService.getExecutors()"  value="{{item.name}}">{{item.name}}</ion-option>
       </ion-select>
     </ion-item>

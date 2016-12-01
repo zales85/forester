@@ -21,7 +21,9 @@ export class StorageService {
       direction: '',
       executor: '',
       synchronized: 'false',
-      finished: 'false'
+      estimated: 'false',
+      width: 0,
+      height: 0
     };
   }
 
