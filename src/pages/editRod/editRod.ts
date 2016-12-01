@@ -30,7 +30,7 @@ export class EditRodPage {
   save(form) {
     this.submitted = true;
     if(form.form.valid) {
-      this.rod['estimated']='true';
+      this.rod['estimated']=true;
       console.log('update value', this.rod);
       this.storageService.saveRod(this.rod);
       this.navCtrl.pop();

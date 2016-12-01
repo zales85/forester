@@ -20,8 +20,8 @@ export class StorageService {
       planPosition: '',
       direction: '',
       executor: '',
-      synchronized: 'false',
-      estimated: 'false',
+      synchronized: false,
+      estimated: false,
       width: 0,
       height: 0
     };

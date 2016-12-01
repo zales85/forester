@@ -8,6 +8,8 @@ import { AddRodPage } from '../addRod/addRod';
 
 import { StorageService } from '../../services/StorageService';
 
+import { AlertController } from 'ionic-angular';
+
 @Component({
   selector: 'page-listRod',
   templateUrl: 'listRod.html'
@@ -17,7 +19,9 @@ export class ListRodPage {
   allRods = [];
   counter = 0;
 
-  constructor(public navCtrl: NavController, private storageService: StorageService) {
+  constructor(public navCtrl: NavController,
+              private storageService: StorageService,
+              public alertCtrl: AlertController) {
 
   }
 
@@ -48,6 +52,24 @@ export class ListRodPage {
   ionViewDidEnter() {
      console.log('ionViewDidEnter');
      this.reloadRods();
+  }
+
+  showAlertBeforeSync() {
+    let alert = this.alertCtrl.create({
+      title: 'Satus',
+      subTitle: 'ROD oczekuje na synchronizację magazynu',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  showAlertAfterSync() {
+    let alert = this.alertCtrl.create({
+      title: 'Satus',
+      subTitle: 'ROD przesłany do magazynu',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 }
