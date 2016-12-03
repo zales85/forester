@@ -4,6 +4,10 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class StorageService {
 
+  private SHEET_ID = "1-TOYu4saj8-Rc96uDcS_iG2w99SjsK75zDP7S_HPtXI";
+
+  private API_KEY = "AIzaSyB8f7ZnSjnsyZiZ4DzIMcwPY-Hl6HKxJqw";
+
   constructor(private storage: Storage) {
   }
 
@@ -66,6 +70,36 @@ export class StorageService {
         console.log('Sync your rodsStore empty ');
       }
     })
+  }
+
+  createUpdateUrl(rods) {
+    return "https://sheets.googleapis.com/v4/spreadsheets/"+this.SHEET_ID+"/values/data!A1:J?valueInputOption=USER_ENTERED&key="+this.API_KEY;
+  }
+
+  createUpdateBody(rods) {
+    let range = "data!A1:J"+rods.values.length;
+    let values = this.createUpdateValues(rods);
+    return {
+      "range": range,
+      "majorDimension": "ROWS",
+      "values": values
+    };
+  }
+
+  private createUpdateValues(rods) {
+    var values = [];
+    console.log("createUpdateValues start");
+    rods.forEach((value, key, map) =>{
+      var row = [];
+      console.log("new row");
+      for(var property in value) {
+        console.log('value: ' + value[property]);
+        row.push(value[property]);
+      }
+      values.push(row);
+    })
+    console.log("createUpdateValues :" + values);
+    return values;
   }
 
 }
