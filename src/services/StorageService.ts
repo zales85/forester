@@ -73,11 +73,12 @@ export class StorageService {
   }
 
   createUpdateUrl(rods) {
-    return "https://sheets.googleapis.com/v4/spreadsheets/"+this.SHEET_ID+"/values/data!A1:J?valueInputOption=USER_ENTERED&key="+this.API_KEY;
+    return "https://sheets.googleapis.com/v4/spreadsheets/"+this.SHEET_ID+"/values/data!A1:J"+rods.size+"?valueInputOption=USER_ENTERED";
   }
 
   createUpdateBody(rods) {
-    let range = "data!A1:J"+rods.values.length;
+    console.log("createUpdateValues " + rods);
+    let range = "data!A1:J"+rods.size;
     let values = this.createUpdateValues(rods);
     return {
       "range": range,

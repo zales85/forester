@@ -13,6 +13,7 @@ import { WarehousePage } from '../pages/warehouse/warehouse';
 import { DictionaryService } from '../services/DictionaryService';
 import { ListDictionaryPage } from '../pages/listDictionary/listDictionary';
 import { StorageService } from '../services/StorageService';
+import { AuthService } from '../services/AuthService';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,6 @@ import { StorageService } from '../services/StorageService';
     AddRodPage,
     WarehousePage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage, DictionaryService, StorageService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage, DictionaryService, StorageService, AuthService]
 })
 export class AppModule {}
