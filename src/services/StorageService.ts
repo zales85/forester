@@ -47,14 +47,31 @@ export class StorageService {
         val = {counter:0, rods:[]};
       }
       val.counter ++;
-      console.log('Saving map id:', rod.id);
-      console.log('Saving map value:', rod);
+      console.log('saveRod Saving id:', rod.id);
+      console.log('saveRod Saving value:', rod);
       val.rods = this.replaceRodInArray(rod, val.rods);
-      console.log('Saving rods', val);
-      console.log('Saving rods stringify', JSON.stringify(val));
+      console.log('saveRod Saving rods', val);
+      console.log('saveRod Saving rods stringify', JSON.stringify(val));
       this.storage.set('rodsStore', val);
     })
   }
+
+  markRodsAsSynchronized(rodsToSynchronized) {
+    this.storage.get('rodsStore').then((val) => {
+      if(val) {
+        for (let entry of rodsToSynchronized) {
+          entry['synchronized'] = true;
+          val.rods = this.replaceRodInArray(entry, val.rods);
+        }
+        console.log('markRodsAsSynchronized Saving rods', val);
+        console.log('markRodsAsSynchronized Saving rods stringify', JSON.stringify(val));
+        this.storage.set('rodsStore', val);
+      } else {
+        console.log('markRodsAsSynchronized SKIPPED', val);
+      }
+    })
+  }
+
 
   private replaceRodInArray(rod, rodArray) {
     var newRodArray = [];

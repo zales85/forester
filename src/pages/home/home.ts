@@ -15,8 +15,10 @@ import { AuthService } from '../../services/AuthService';
 import { LoadingController } from 'ionic-angular';
 
 import {Http, Response, Headers} from '@angular/http';
+
 import 'rxjs/Rx';
-import {Observable} from "rxjs";
+
+import { AlertController } from 'ionic-angular';
 
 declare var window: any;
 
@@ -33,7 +35,8 @@ export class HomePage {
               public loadingCtrl: LoadingController,
               private http: Http,
               private platform: Platform,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private alertController: AlertController) {
 
   }
 
@@ -78,30 +81,53 @@ export class HomePage {
 
   synchronizeWithWarehouse() {
     console.log("synchronizeWithWarehouse");
-    let loader = this.getLoaderPopUp();
     this.storageService.getAllRodsPromise().then((val) => {
-      loader.present();
       if(val) {
-        console.log("val :" + val)
-        let url = this.storageService.createUpdateUrl(val.rods);
-        let body = this.storageService.createUpdateBody(val.rods);
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'Bearer ' + this.new_access_token);// + this.authService.token.access_token);
-        console.log("start calling synchronize http");
-        this.http.put(url,JSON.stringify(body),{headers: headers})
-          .map((res: Response) => res.json())
-          .subscribe(data => {
-              console.log("result :" + data);
-              loader.dismiss()
-            },
-            err => {
-              console.error(err)
-              loader.dismiss()
-            },
-            () => console.log("ok" ));
+        console.log("val :" + val);
+        console.log("val.rods :" + val.rods.length);
+        var rodsToSynchronize =  val.rods.filter(this.isEligableForSynchronization);
+        console.log("rodsToSynchronize :" + rodsToSynchronize.length);
+        if(rodsToSynchronize.length > 0) {
+          let loader = this.getLoaderPopUpSynch(rodsToSynchronize.length);
+          loader.present();
+          let url = this.storageService.createUpdateUrl(rodsToSynchronize);
+          let body = this.storageService.createUpdateBody(rodsToSynchronize);
+          let headers = new Headers();
+          headers.append('Content-Type', 'application/json');
+          headers.append('Authorization', 'Bearer ' + this.new_access_token);
+          console.log("start calling synchronize http");
+          this.http.put(url,JSON.stringify(body),{headers: headers})
+            .map((res: Response) => res.json())
+            .subscribe(data => {
+                console.log("result :" + data);
+                this.storageService.markRodsAsSynchronized(rodsToSynchronize);
+                loader.dismiss()
+              },
+              err => {
+                console.error(err)
+                loader.dismiss()
+              },
+              () => console.log("ok" ));
+        } else {
+          console.log("rodsToSynchronize SKIPPED");
+          this.showSyncSipped();
+        }
+
       }
     })
+  }
+
+  showSyncSipped() {
+    let alert = this.alertController.create({
+      title: 'Informacja',
+      subTitle: 'Brak RODów do sychronizacji z magazynem',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  isEligableForSynchronization(element, index, array) {
+    return (element['estimated'] == true);
   }
 
   refreshToken() {
@@ -126,31 +152,23 @@ export class HomePage {
         () => console.log("ok" ));
   }
 
-  private getLoaderPopUp() {
+  private getLoaderPopUpSynch(rodsToSynchronization) {
     let loader = this.loadingCtrl.create({
-      content: "Please wait..."
+      content: "Synchronizacja " + rodsToSynchronization + " ROD"
     });
     return loader;
   }
 
-  // public loginToGoggle() {
-  //   if(this.authService.token){
-  //     console.log("Auth:" + this.authService.token.access_token);
-  //   } else {
-  //     console.log("NO auth");
-  //     this.authService.call();
-  //   }
-  // }
+  private getLoaderPopUp() {
+    let loader = this.loadingCtrl.create({
+      content: "Odświeżanie tokena "
+    });
+    return loader;
+  }
 
   public loginToGoggle() {
     this.platform.ready().then(() => {
       this.refreshToken();
-      // if(this.authService.token){
-      //   console.log("Auth:" + this.authService.token.access_token);
-      // } else {
-      //   console.log("NO auth");
-      //   this.authService.call();
-      // }
     });
   }
 }
