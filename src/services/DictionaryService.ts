@@ -14,4 +14,10 @@ export class DictionaryService {
 
   getPlans() { return this.PLANS; }
 
+  setExecutors(newvalue) {this.EXECUTORS = newvalue;  }
+
+  setIncomeTypes(newvalue) {this.INCOME_TYPES = newvalue; }
+
+  setPlans(newvalue) { this.PLANS = newvalue; }
+
 }

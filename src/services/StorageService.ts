@@ -119,6 +119,10 @@ export class StorageService {
     return "https://sheets.googleapis.com/v4/spreadsheets/"+this.SHEET_ID+"/values/data!A1:J"+rods.length+"?valueInputOption=USER_ENTERED";
   }
 
+  createGetDictionaryUrl(dictionary) {
+    return "https://sheets.googleapis.com/v4/spreadsheets/1-TOYu4saj8-Rc96uDcS_iG2w99SjsK75zDP7S_HPtXI/values/"+dictionary+"!A1:B5?key=AIzaSyB8f7ZnSjnsyZiZ4DzIMcwPY-Hl6HKxJqw";
+  }
+
   createUpdateBody(rods) {
     console.log("createUpdateValues " + rods);
     let range = "data!A1:J"+rods.length;

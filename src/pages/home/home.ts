@@ -62,7 +62,7 @@ export class HomePage {
 
   synchronizeWithWarehouse2() {
     console.log("synchronizeWithWarehouse");
-    let loader = this.getLoaderPopUp();
+    let loader = this.getLoaderAuthPopUp();
     this.storageService.getAllRodsPromise().then((val) => {
       loader.present();
       if(val) {
@@ -85,10 +85,11 @@ export class HomePage {
       if(val) {
         console.log("val :" + val);
         console.log("val.rods :" + val.rods.length);
-        var rodsToSynchronize =  val.rods.filter(this.isEligableForSynchronization);
-        console.log("rodsToSynchronize :" + rodsToSynchronize.length);
-        if(rodsToSynchronize.length > 0) {
-          let loader = this.getLoaderPopUpSynch(rodsToSynchronize.length);
+        var rodsToSynchronize =  val.rods.filter(this.isEligibleForSynchronization);
+        var rodsNotSynchronized =  val.rods.filter(this.isNotSynchronized);
+        console.log("rodsToSynchronize :" + rodsNotSynchronized.length);
+        if(rodsNotSynchronized.length > 0) {
+          let loader = this.getLoaderSynchPopUp(rodsNotSynchronized.length);
           loader.present();
           let url = this.storageService.createUpdateUrl(rodsToSynchronize);
           let body = this.storageService.createUpdateBody(rodsToSynchronize);
@@ -106,8 +107,12 @@ export class HomePage {
               err => {
                 console.error(err)
                 loader.dismiss()
+                this.showErrorPopUp()
               },
-              () => console.log("ok" ));
+              () => {
+                console.log("ok" )
+
+              });
         } else {
           console.log("rodsToSynchronize SKIPPED");
           this.showSyncSipped();
@@ -126,13 +131,17 @@ export class HomePage {
     alert.present();
   }
 
-  isEligableForSynchronization(element, index, array) {
+  isEligibleForSynchronization(element, index, array) {
     return (element['estimated'] == true);
+  }
+
+  isNotSynchronized(element, index, array) {
+    return (element['synchronized'] == false && element['estimated'] == true);
   }
 
   refreshToken() {
     console.log("refreshToken");
-    let loader = this.getLoaderPopUp();
+    let loader = this.getLoaderAuthPopUp();
     let url = this.storageService.createRefreshTokenUrl();
     let body = this.storageService.createRefreshTokenBody();
     let headers = new Headers();
@@ -146,22 +155,35 @@ export class HomePage {
           loader.dismiss()
         },
         err => {
+          console.log("err" )
           console.error(err)
           loader.dismiss()
+          this.showErrorPopUp()
         },
-        () => console.log("ok" ));
+        () => {
+          console.log("ok" )
+        });
   }
 
-  private getLoaderPopUpSynch(rodsToSynchronization) {
+  private showErrorPopUp() {
+    let alert = this.alertController.create({
+      title: 'Error',
+      subTitle: 'Komunikacja z serwerem zakończona niepowodzeniem',
+      buttons: ['Kontynuj']
+    });
+    alert.present();
+  }
+
+  private getLoaderSynchPopUp(rodsToSynchronization) {
     let loader = this.loadingCtrl.create({
-      content: "Synchronizacja " + rodsToSynchronization + " ROD"
+      content: "Komunikacja z serwerem przesyałanie " + rodsToSynchronization + " ROD-ów do magazynu"
     });
     return loader;
   }
 
-  private getLoaderPopUp() {
+  private getLoaderAuthPopUp() {
     let loader = this.loadingCtrl.create({
-      content: "Odświeżanie tokena "
+      content: "Autoryzacja aplikacji, proszę czekać"
     });
     return loader;
   }
