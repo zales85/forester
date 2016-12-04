@@ -13,7 +13,7 @@ import { StorageService } from '../../services/StorageService';
 
 export class AddRodPage {
 
-  rod = {};
+  rod;
 
   submitted = false;
 

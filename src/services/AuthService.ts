@@ -23,7 +23,10 @@ export class AuthService {
     // build authUrl:
     var authBase = 'https://accounts.google.com/o/oauth2/v2/auth';
     var authParams = {
-      response_type: 'token',
+      response_type: 'code',
+      access_type: 'offline',
+      access_token: 'ya29.CjCpA2t04cq8j72ijoablQaNXZKbS6cNDutaHWgH84g5pW1T9vdZfkfmDCujrGyl8JE',
+      approval_prompt: 'force',
       client_id: '269902140899-b2h30e1hv8i0c2ge5skdu4avd3e1crfh.apps.googleusercontent.com',
       redirect_uri: window.location.origin,
       scope: [ 'https://www.googleapis.com/auth/spreadsheets'

@@ -28,7 +28,7 @@ export class WarehousePage {
   reloadRods() {
      this.storageService.getAllRodsPromise().then((val) => {
        if(val) {
-         this.allRods =  Array.from(val.rods.values()).filter(this.isSynchronized);
+         this.allRods =  val.rods.filter(this.isSynchronized);
        }
      })
   }

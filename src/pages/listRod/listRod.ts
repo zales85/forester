@@ -43,7 +43,7 @@ export class ListRodPage {
   reloadRods() {
      this.storageService.getAllRodsPromise().then((val) => {
        if(val) {
-         this.allRods =  Array.from(val.rods.values());
+         this.allRods =  val.rods;
          this.counter = val.counter;
        }
      })

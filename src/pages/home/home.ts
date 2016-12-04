@@ -26,6 +26,8 @@ declare var window: any;
 })
 export class HomePage {
 
+  private new_access_token;
+
   constructor(public navCtrl: NavController,
               private storageService: StorageService,
               public loadingCtrl: LoadingController,
@@ -62,7 +64,7 @@ export class HomePage {
       loader.present();
       if(val) {
         console.log("start");
-        this.http.get('http://httpbin.org/delay/1')
+        this.http.get('http://httpbin.org/delay/3')
                   .map((res: Response) => res.json())
                   .subscribe(data => {
                                 console.log("joined :" + data.length)
@@ -85,12 +87,12 @@ export class HomePage {
         let body = this.storageService.createUpdateBody(val.rods);
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'Bearer ' + this.authService.token.access_token);
-        console.log("start");
+        headers.append('Authorization', 'Bearer ' + this.new_access_token);// + this.authService.token.access_token);
+        console.log("start calling synchronize http");
         this.http.put(url,JSON.stringify(body),{headers: headers})
           .map((res: Response) => res.json())
           .subscribe(data => {
-              console.log("result :" + data)
+              console.log("result :" + data);
               loader.dismiss()
             },
             err => {
@@ -100,6 +102,28 @@ export class HomePage {
             () => console.log("ok" ));
       }
     })
+  }
+
+  refreshToken() {
+    console.log("refreshToken");
+    let loader = this.getLoaderPopUp();
+    let url = this.storageService.createRefreshTokenUrl();
+    let body = this.storageService.createRefreshTokenBody();
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    console.log("start calling refresh token http");
+    this.http.post(url,body,{headers: headers})
+      .map((res: Response) => res.json())
+      .subscribe(data => {
+          console.log("result :" + data.access_token)
+          this.new_access_token = data.access_token;
+          loader.dismiss()
+        },
+        err => {
+          console.error(err)
+          loader.dismiss()
+        },
+        () => console.log("ok" ));
   }
 
   private getLoaderPopUp() {
@@ -120,12 +144,13 @@ export class HomePage {
 
   public loginToGoggle() {
     this.platform.ready().then(() => {
-      if(this.authService.token){
-        console.log("Auth:" + this.authService.token.access_token);
-      } else {
-        console.log("NO auth");
-        this.authService.call();
-      }
+      this.refreshToken();
+      // if(this.authService.token){
+      //   console.log("Auth:" + this.authService.token.access_token);
+      // } else {
+      //   console.log("NO auth");
+      //   this.authService.call();
+      // }
     });
   }
 }

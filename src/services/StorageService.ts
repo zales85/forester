@@ -44,41 +44,67 @@ export class StorageService {
         console.log('Retrieved rods', val);
       } else {
         console.log('Your rodsStore empty ');
-        val = {counter:0, rods:new Map()};
+        val = {counter:0, rods:[]};
       }
       val.counter ++;
       console.log('Saving map id:', rod.id);
       console.log('Saving map value:', rod);
-      val.rods.set(rod.id, rod);
+      val.rods = this.replaceRodInArray(rod, val.rods);
       console.log('Saving rods', val);
+      console.log('Saving rods stringify', JSON.stringify(val));
       this.storage.set('rodsStore', val);
     })
   }
 
-  synchronizeAllRods() {
-    this.storage.get('rodsStore').then((val) => {
-      if(val) {
-        console.log('Sync retrieved rods', val);
-        val.rods.forEach((value, key, map) =>{
-          if(value['estimated'] && !value['synchronized']) {
-            value['synchronized'] = true;
-          }
-        })
-        this.storage.set('rodsStore', val);
-        console.log('Sync saved rods', val);
+  private replaceRodInArray(rod, rodArray) {
+    var newRodArray = [];
+    var replaced = false;
+    for (let entry of rodArray) {
+      if(entry['id'] == rod['id']) {
+        newRodArray.push(rod);
+        replaced = true;
       } else {
-        console.log('Sync your rodsStore empty ');
+        newRodArray.push(entry);
       }
-    })
+    }
+    if(!replaced) {
+      newRodArray.push(rod);
+    }
+    return newRodArray;
+  }
+
+  synchronizeAllRods() {
+    // this.storage.get('rodsStore').then((val) => {
+    //   if(val) {
+    //     console.log('Sync retrieved rods', val);
+    //     val.rods.forEach((value, key, map) =>{
+    //       if(value['estimated'] && !value['synchronized']) {
+    //         value['synchronized'] = true;
+    //       }
+    //     })
+    //     this.storage.set('rodsStore', val);
+    //     console.log('Sync saved rods', val);
+    //   } else {
+    //     console.log('Sync your rodsStore empty ');
+    //   }
+    // })
+  }
+
+  createRefreshTokenUrl() {
+    return "https://www.googleapis.com/oauth2/v4/token";
+  }
+
+  createRefreshTokenBody() {
+    return "client_id=269902140899-70iub82anpgeedh46mcrltevgobrnpv4.apps.googleusercontent.com&client_secret=BRV9r__L0ZjaCJ4i8lK44zDS&refresh_token=1/6uH3SZk6w0N0cEsQeZ1MJXw7CXsMzVZG8cpCSeBka88&grant_type=refresh_token";
   }
 
   createUpdateUrl(rods) {
-    return "https://sheets.googleapis.com/v4/spreadsheets/"+this.SHEET_ID+"/values/data!A1:J"+rods.size+"?valueInputOption=USER_ENTERED";
+    return "https://sheets.googleapis.com/v4/spreadsheets/"+this.SHEET_ID+"/values/data!A1:J"+rods.length+"?valueInputOption=USER_ENTERED";
   }
 
   createUpdateBody(rods) {
     console.log("createUpdateValues " + rods);
-    let range = "data!A1:J"+rods.size;
+    let range = "data!A1:J"+rods.length;
     let values = this.createUpdateValues(rods);
     return {
       "range": range,
@@ -90,15 +116,15 @@ export class StorageService {
   private createUpdateValues(rods) {
     var values = [];
     console.log("createUpdateValues start");
-    rods.forEach((value, key, map) =>{
+    for (let rod of rods) {
       var row = [];
       console.log("new row");
-      for(var property in value) {
-        console.log('value: ' + value[property]);
-        row.push(value[property]);
+      for(var property in rod) {
+        console.log('value: ' + rod[property]);
+        row.push(rod[property]);
       }
       values.push(row);
-    })
+    }
     console.log("createUpdateValues :" + values);
     return values;
   }
