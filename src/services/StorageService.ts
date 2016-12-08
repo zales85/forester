@@ -6,13 +6,38 @@ export class StorageService {
 
   private SHEET_ID = "1-TOYu4saj8-Rc96uDcS_iG2w99SjsK75zDP7S_HPtXI";
 
-  private API_KEY = "AIzaSyB8f7ZnSjnsyZiZ4DzIMcwPY-Hl6HKxJqw";
-
   constructor(private storage: Storage) {
   }
 
   getAllRodsPromise() {
     return this.storage.get('rodsStore');
+  }
+
+  getPlansDictionaryPromise() {
+    return this.storage.get('plans');
+  }
+
+  savePlansDictionary(plans) {
+    console.log('savePlansDictionary :', plans);
+    this.storage.set('plans', plans);
+  }
+
+  getExecutorsDictionaryPromise() {
+    return this.storage.get('executors');
+  }
+
+  saveExecutorsDictionary(executors) {
+    console.log('saveExecutorsDictionary :', executors);
+    this.storage.set('executors', executors);
+  }
+
+  getIncomeTypesDictionaryPromise() {
+    return this.storage.get('incomeTypes');
+  }
+
+  saveIncomeTypesDictionary(incomeTypes) {
+    console.log('saveIncomeTypesDictionary :', incomeTypes);
+    this.storage.set('incomeTypes', incomeTypes);
   }
 
   createNewRod(rodNumber) {
@@ -72,7 +97,6 @@ export class StorageService {
     })
   }
 
-
   private replaceRodInArray(rod, rodArray) {
     var newRodArray = [];
     var replaced = false;
@@ -90,23 +114,6 @@ export class StorageService {
     return newRodArray;
   }
 
-  synchronizeAllRods() {
-    // this.storage.get('rodsStore').then((val) => {
-    //   if(val) {
-    //     console.log('Sync retrieved rods', val);
-    //     val.rods.forEach((value, key, map) =>{
-    //       if(value['estimated'] && !value['synchronized']) {
-    //         value['synchronized'] = true;
-    //       }
-    //     })
-    //     this.storage.set('rodsStore', val);
-    //     console.log('Sync saved rods', val);
-    //   } else {
-    //     console.log('Sync your rodsStore empty ');
-    //   }
-    // })
-  }
-
   createRefreshTokenUrl() {
     return "https://www.googleapis.com/oauth2/v4/token";
   }
@@ -120,7 +127,7 @@ export class StorageService {
   }
 
   createGetDictionaryUrl(dictionary) {
-    return "https://sheets.googleapis.com/v4/spreadsheets/1-TOYu4saj8-Rc96uDcS_iG2w99SjsK75zDP7S_HPtXI/values/"+dictionary+"!A1:B5?key=AIzaSyB8f7ZnSjnsyZiZ4DzIMcwPY-Hl6HKxJqw";
+    return "https://sheets.googleapis.com/v4/spreadsheets/1-TOYu4saj8-Rc96uDcS_iG2w99SjsK75zDP7S_HPtXI/values/"+dictionary+"!A1:B?key=AIzaSyB8f7ZnSjnsyZiZ4DzIMcwPY-Hl6HKxJqw";
   }
 
   createUpdateBody(rods) {
@@ -133,6 +140,7 @@ export class StorageService {
       "values": values
     };
   }
+
 
   private createUpdateValues(rods) {
     var values = [];

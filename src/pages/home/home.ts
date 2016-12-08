@@ -60,25 +60,6 @@ export class HomePage {
     this.navCtrl.push(WarehousePage);
   }
 
-  synchronizeWithWarehouse2() {
-    console.log("synchronizeWithWarehouse");
-    let loader = this.getLoaderAuthPopUp();
-    this.storageService.getAllRodsPromise().then((val) => {
-      loader.present();
-      if(val) {
-        console.log("start");
-        this.http.get('http://httpbin.org/delay/3')
-                  .map((res: Response) => res.json())
-                  .subscribe(data => {
-                                console.log("joined :" + data.length)
-                                loader.dismiss()
-                             },
-                             err => console.error(err),
-                             () => console.log("ok" ));
-      }
-    })
-  }
-
   synchronizeWithWarehouse() {
     console.log("synchronizeWithWarehouse");
     this.storageService.getAllRodsPromise().then((val) => {
@@ -115,14 +96,14 @@ export class HomePage {
               });
         } else {
           console.log("rodsToSynchronize SKIPPED");
-          this.showSyncSipped();
+          this.showSyncSkipped();
         }
 
       }
     })
   }
 
-  showSyncSipped() {
+  showSyncSkipped() {
     let alert = this.alertController.create({
       title: 'Informacja',
       subTitle: 'Brak RODów do sychronizacji z magazynem',
