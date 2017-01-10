@@ -2,7 +2,7 @@
   <ion-navbar>
 
     <ion-title>
-      Zarządzanie ROD
+      Lista ROD
     </ion-title>
 
     <ion-buttons end>
@@ -17,9 +17,9 @@
   <ion-list>
     <ion-item *ngFor="let item of allRods">
       <h2>{{item.documentNumber}}</h2>
-      <p>{{item.executor}} - {{item.creationDate}}</p>
-      <button [hidden]="item.estimated || item.synchronized" ion-button icon-only clear item-right  color="dark" (click)="editRod(item)">
-        <ion-icon name="build"></ion-icon>
+
+      <button [hidden]="item.estimated || item.synchronized" ion-button icon-only clear item-right   color="dark" (click)="editRod(item)">
+      <ion-icon name="build"></ion-icon>
       </button>
       <button [hidden]="!item.estimated || item.synchronized" ion-button icon-only clear item-right  color="danger" (click)="showAlertBeforeSync()">
         <ion-icon name="cloud-upload"></ion-icon>

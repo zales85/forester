@@ -44,7 +44,7 @@ export class StorageService {
     let dateValue = this.createDocumentCreationDate();
     return {
       id: rodNumber,
-      documentNumber: 'ROD-' + rodNumber + "-" + dateValue,
+      documentNumber: 'ROD-' + rodNumber,
       creationDate: dateValue,
       planPosition: '',
       direction: '',
